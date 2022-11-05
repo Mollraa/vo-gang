@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list</title>
+</head>
+
+<body>
+    <div id="list">
+        <!-- 쉽알트방향키 - 복사 -->
+        <div data-no="1">첫번째</div>
+        <div data-no="2">두번째</div>
+        <div data-no="3">세번째</div>
+        <div data-no="4">네번째</div>
+        <div data-no="5" onclick="">오번째</div>
+        <!-- 온클릭 쓰지마세요 스크립트에 묶어서 쓰기 - 교수님 -->
+    </div>
+
+    <script>
+        //이벤트 전파 
+        // list.addEventListener("click", function(){
+        //     console.log("list click : " ,"list");
+        // })
+        list.addEventListener("click", clickHandler)
+        //
+
+
+        //id걸어두면 편한점 바로 찾기가능
+        // 1.
+        // list.getEelmentsByTagName("div")
+
+        // 2.
+        divs = document.querySelectorAll("#list div")
+
+        //개별적으로 div에 이벤트 걸기
+        /*1.
+        for(let div of divs){
+            // "click(발생할 이벤트)", function()(처리할 함수)
+            div.addEventListener("click", function(){
+                no = this.getAttribute("data-no")
+                console.log("no : ", no);
+        })
+        } 
+        */
+
+        //2.
+        // for(let div of divs){
+        //     // "click(발생할 이벤트)", function()(처리할 함수)
+        //     div.addEventListener("click", clickHandler)
+        // }
+
+        function clickHandler() {
+            // console.log("clickHandler this : ", this);
+            // window.event
+            // console.log("clickHandler this : ", this);
+
+            //멈춘상태에서 확인
+            // debugger
+
+            //event.target -> 부모한태 걸린 이벤트가 누구인지 찾아가는거 
+            no = event.target.getAttribute("data-no")
+            console.log("no : ", no);
+        }
+    </script>
+</body>
+
+</html>

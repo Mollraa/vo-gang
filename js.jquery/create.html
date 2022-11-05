@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>create</title>
+</head>
+
+<body>
+    <!-- 추가하려면
+    li만들고 
+    버튼동작하고 
+    ul태그에 추가 
+    -->
+
+    <input name="fruit">
+    <button id="btn">추가</button>
+    <ul class="list">
+        <li class="item">딸기</li>
+    </ul>
+    <script>
+        //표에 있는 함수 다외우면 가능함 제발 외우자 ㅎㅎ 
+
+        btn.addEventListener("click", function () {
+            // 1. li태그 생성
+            li = document.createElement("li")
+
+            // 2. 태그에 속성을 지정(추가)
+                //2-1
+                // li.setAttribute("class", "item")
+
+                //2-2
+                //클래스인경우 추가하기
+                li.classList.add("item")
+
+            // 3. 태그 내용 변경
+                console.log("li.innerHTML : ", li.innerHTML)
+
+                // 3-1
+                // li.innerHTML = document.getElementsByName("fruit")[0].value;
+                // 3-2
+                li.innerHTML = document.querySelector('[name="fruit"]').value;
+
+                console.log('입력 값 : ',document.getElementsByName("fruit")[0].value);
+
+            // 4.. 새로 만들어지 태그를 추가 
+            document.querySelector(".list").appendChild(li)
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>create</title>
+
+</head>
+
+<body>
+    <!-- 추가하려면
+    li만들고 
+    버튼동작하고 
+    ul태그에 추가 
+    -->
+
+    <input name="fruit">
+    <button id="btn">추가</button>
+    <ul class="list">
+        <li class="item">딸기</li>
+    </ul>
+
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <script>
+        /*
+        tfruit = document.querySelector('[name="fruit"]')
+
+        //click, mouseover
+        btn.addEventListener("click", function () {
+            // let txt = document.querySelector('[name="fruit"]').value
+            let txt = tfruit.value
+
+            document.querySelector(".list").innerHTML += `<li class="item">${txt}</li>`
+            // 1)
+            // document.querySelector('[name="fruit"]').value =""
+            // 전역변수 만들었으면 
+            // tfruit.value =""
+
+            // 2)
+            // document.querySelector('[name="fruit"]').select()
+            tfruit.select();
+            tfruit.focus();
+            // tfruit.remove();
+        });
+
+        //엔터키 치면 버튼클릭처럼 동작하게 하고싶어
+        tfruit.addEventListener("keydown", function(){
+            console.log(event.keyCode);
+
+            if(event.keyCode == 13) {
+                btn.click();
+            }
+        })
+        */
+
+        //제이쿼리로 풀기 
+        
+        // 1. document.querySelector(".list").innerHTML += `<li class="item">${txt}</li>`
+        // 1-1
+        // $(".list").html( $("#list").html() + `<li class="item">${txt}</li>`)
+        
+        // 1-2)
+        
+        jfruit = $('[name="fruit"]')
+
+        $("#btn").on("click", function(){
+           let txt = jfruit.val()
+            $(".list").append(`<li class="item">${txt}</li>`)
+        });
+        
+    </script>
+</body>
+
+</html>

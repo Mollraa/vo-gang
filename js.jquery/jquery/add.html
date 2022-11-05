@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add</title>
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <input id="num1" value="5">
+    <input id="num2" value="12">
+    <button id="btn">계산</button>
+    <div id="result">
+        <!-- innerHTML : 값을 넣겠다 -->
+    </div>
+
+    <script>
+        /*
+        btn.addEventListener("click", clickEvent)
+
+        function clickEvent(){
+            console.log("result : ",result)
+            console.log("result.innerHTML : ",result.innerHTML)
+
+            result.innerHTML =  parseInt(num1.value) + parseInt(num2.value)
+            // type을 number로 주거나, parseint해주거나 하기
+        };
+
+        //교수님
+        btn.addEventListener("click", function clickEvent(){
+            result.innerHTML =  parseInt(num1.value) + parseInt(num2.value)
+        });
+        */
+
+        //제이쿼리로 풀기
+        //on = bind
+        $("#btn").on("click", function () {
+            tot = parseInt($("#num1").val()) + parseInt($("#num2").val())
+            $("#result").html(tot);
+            console.log("tot : ", tot);
+        })
+    </script>
+</body>
+
+</html>

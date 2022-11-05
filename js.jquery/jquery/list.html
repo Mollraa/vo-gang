@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list</title>
+</head>
+
+<body>
+    <div id="list">
+        <!-- 쉽알트방향키 - 복사 -->
+        <div data-no="1">첫번째</div>
+        <div data-no="2">두번째</div>
+        <div data-no="3">세번째</div>
+        <div data-no="4">네번째</div>
+        <div data-no="5" onclick="">오번째</div>
+        <!-- 온클릭 쓰지마세요 스크립트에 묶어서 쓰기 - 교수님 -->
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>    
+        divs = $("#list div")
+        divs.on("click", clickHandler)
+
+        function clickHandler() {
+            // no = event.target.getAttribute("data-no")
+            //  -> 제이쿼리로 만들기 
+            // 1) 
+            // no = $(window.event.target).attr("data-no")
+            // 2) 
+            no = $(window.event.target).data("no")
+            console.log("no : ", no);
+        }
+    </script>
+</body>
+
+</html>

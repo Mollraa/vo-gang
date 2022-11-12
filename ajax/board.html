@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- board가 보여줄 위치만 잡아줌. 스타일은 내맘대로  -->
+    <!-- <div id="board"></div> -->
+    <ul id="board">
+
+    </ul>
+
+    <script>
+        url ="http://localhost:8081/java/freeBoard/ajax/list"
+        fetch(url, {method:"post"})
+            .then(res => res.json())
+            .then(objs => {
+                console.log(objs);
+                //제목 불러오기 
+                // board.innerHTML = `<li>${obj.title}</li>`;
+
+                for(obj of objs){
+                    board.innerHTML += `<li>${obj.title}</li>`
+                }
+
+            })
+    </script>
+</body>
+
+</html>

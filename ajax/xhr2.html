@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xhr2.html</title>
+</head>
+
+<body>
+    <button id="btn">요청</button>
+    <div id="demo">결과..</div>
+
+    <script>
+        btn.addEventListener("click", loadDoc);
+
+        function loadDoc() {
+            url =
+                "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=20226254"
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                console.log()
+                const obj = JSON.parse(this.responseText);
+                
+                //첫번쨰 감독이름 , {}는 .(인덱스)으로 접근
+                demo.innerHTML = `감독이름 : ${obj.movieInfoResult.movieInfo.directors[0].peopleNm}`;
+
+                //출연배우들 이름, []는 배열로
+                list = obj.movieInfoResult.movieInfo.actors;
+                for(actor of list){
+                    // document.getElementById("demo").innerHTML = 
+                    document.getElementById("demo").innerHTML +=
+                    `<div class="col">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                                <h5 class="card-title"> 배우이름 : ${actor.peopleNm}</h5>
+                                <p class="card-text"></p>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+            }
+            xhttp.open("GET", url);
+            xhttp.send();
+            console.log("end");
+
+        }
+    </script>
+</body>
+
+</html>

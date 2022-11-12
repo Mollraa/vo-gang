@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xhr2_fetch</title>
+</head>
+
+<body>
+    <button id="btn">요청</button>
+    <div id="demo">결과..</div>
+
+    <script>
+        btn.addEventListener("click", loadInfo);
+
+        function loadInfo() {
+
+            url =
+                "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=20226254"
+            fetch(url)
+                //return response.json()원래 이렇게 , return생략가능 
+                //lamda, (하나면 생략가능)=>{리턴값적는 곳}있으면 꼭 적어주고 넘어가기 없음생략
+                .then(response => {
+                    response.json()
+                })
+                .then(obj => {callback(obj)})
+        }
+
+        function callback(obj) {
+            //첫번째 감독이름
+            demo.innerHTML = `감독 : ${obj.movieInfoResult.movieInfo.directors[0].peopleNm}`;
+
+            //출연진배우
+            actors = obj.movieInfoResult.movieInfo.actors;
+            for (actor of actors) {
+                demo.innerHTML += `<div>배우 : ${actor.peopleNm}</div>`
+            }
+        }
+    </script>
+</body>
+
+</html>

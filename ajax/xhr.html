@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xhr.html</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+    <!-- 화면구현시 어떻게 보여줄지 구상 -> 테스트 -->
+    <button id="btn">요청</button>
+    <!-- <div id="demo">결과..</div> -->
+    <!-- <ul id="demo">
+        <h3><p>11월 2주차 영화순위</p></h3>
+    </ul> -->
+
+    <div class="row row-cols-1 row-cols-md-2 g-4" id="demo">
+        <!-- 화면구현시 이렇게 만들어두고 ``에 넣어줌 -->
+        <!-- <div class="col">
+          <div class="card">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div> -->
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        btn.addEventListener("click", loadDoc);
+        btn.addEventListener("click", loadInfo);
+
+
+        //show.bs.modal  or  hidePrevented.bs.modal
+        document.querySelector(".modal").addEventListener("show.bs.modal", loadInfo)
+
+
+        /*--------------
+        영화상세정보 조회
+        ----------------*/
+        function loadInfo() {
+            /*
+            network -> url을 불러오는지 null인지 확인 -> loadInfo호출되는지 확인 -> 클릭되는 title이 맞는지 확인 
+            */
+            nm = window.event.relatedTarget // 클릭하는 타겟 ex)1위, 블랙 팬서: 와칸다 포에버
+            // debugger
+            movieCD = nm.getAttribute("data-cd");
+            url =
+                "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=" +
+                movieCD
+            const xhttp = new XMLHttpRequest();
+            demo = document.querySelector(".modal-body");
+
+            xhttp.onload = function () {
+
+                const obj = JSON.parse(this.responseText);
+                demo.innerHTML = `감독 : ${obj.movieInfoResult.movieInfo.directors[0].peopleNm}`;
+
+                //출연진배우
+                actors = obj.movieInfoResult.movieInfo.actors;
+                for (actor of actors) {
+                       demo.innerHTML += `<div>배우 : ${actor.peopleNm}</div>`
+                }
+            }
+            xhttp.open("GET", url);
+            xhttp.send();
+            console.log("end");
+
+        }
+
+
+        /*--------------
+        영화박스 오피스
+        ---------------*/
+        function loadDoc() {
+            // url = "https://jsonplaceholder.typicode.com/todos/1";
+            url =
+                "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20221111"
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                console.log("콜백");
+                // string -> json object parse
+                const obj = JSON.parse(this.responseText);
+                list = obj.boxOfficeResult.dailyBoxOfficeList;
+                // document.getElementById("demo").innerHTML += this.responseText;
+                // document.getElementById("demo").innerHTML = JSON.stringify(list); //배열로나옴
+
+                //for(movie(객체 그잡체..) of list)
+                //1)
+                for (movie of list) {
+                    document.getElementById("demo").innerHTML +=
+                        `<div class="col">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                                <h5 class="card-title" 
+                                data-bs-toggle="modal" data-bs-target="#exampleModal" data-cd="${movie.movieCd}"> ${movie.rank}위, ${movie.movieNm}</h5>
+                                <p class="card-text">상세정보 코드 : ${movie.movieCd}</p>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+                //2)
+                // for(i=0; i<list.length; i++){
+                //     document.getElementById("demo").innerHTML += `<li>${list[i].movieNm}</li><br>`;
+                // }
+            }
+            xhttp.open("GET", url); //여기까지 연결준비
+            xhttp.send(); //전송
+            console.log("end");
+
+        }
+    </script>
+</body>
+
+</html>
